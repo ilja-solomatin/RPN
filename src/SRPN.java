@@ -308,7 +308,7 @@ public class SRPN {
                 } catch(Exception e){
                     //When there is an error from the input from the user, an error message is given to each
                     //individual character
-                    for(char letters: commandComponent.toCharArray()){
+                    for(char letters : commandComponent.toCharArray()){
                         System.out.println("Unrecognised operator or operand \"" + letters + "\".");
                     }
                 }
