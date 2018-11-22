@@ -25,7 +25,7 @@ public class SRPN {
             else{
                 // Do nothing as 8 and 9 are not octal numbers
             }
-        }
+        }//
         else if(input.charAt(input.length()-1) == '=') {
             System.out.println(this.peek());
         }
