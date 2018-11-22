@@ -4,8 +4,8 @@ public class SRPN {
 
     private int maxSize = 23;
     private String stack[] = new String[maxSize];
-    private int randomNumbers[] = new int[23];
-    private int randomNumberTracker = 0;
+    private int randomNumbers[] = new int[22];
+    private int randomNumberTracker = -1;
     private int pointer = -1;
     private long sum;
     private int operandOne;
@@ -21,9 +21,6 @@ public class SRPN {
             if(!input.contains("8") && !input.contains("9")){
                 long octalNumber = Long.parseLong(input, 8);
                 this.push(String.valueOf(octalNumber));
-            }
-            else{
-                // Do nothing as 8 and 9 are not octal numbers
             }
         }
         else if(input.charAt(input.length()-1) == '=') {
@@ -41,7 +38,7 @@ public class SRPN {
                     this.push(String.valueOf(Integer.MIN_VALUE));
                 }
                 else{
-                    this.push(Integer.toString(operandOne + operandTwo));
+                    this.push(Integer.toString(this.operandOne + this.operandTwo));
                 }
             }
             else{
@@ -60,7 +57,7 @@ public class SRPN {
                     this.push(String.valueOf(Integer.MIN_VALUE));
                 }
                 else{
-                    this.push(Integer.toString(operandOne - operandTwo));
+                    this.push(Integer.toString(this.operandOne - this.operandTwo));
                 }
             }
             else{
@@ -79,7 +76,7 @@ public class SRPN {
                     this.push(String.valueOf(Integer.MIN_VALUE));
                 }
                 else{
-                    this.push(Integer.toString(operandOne * operandTwo));
+                    this.push(Integer.toString(this.operandOne * this.operandTwo));
                 }
             }
             else{
@@ -91,7 +88,7 @@ public class SRPN {
                 this.operandTwo = Integer.parseInt(this.pop());
                 this.operandOne = Integer.parseInt(this.pop());
                 if(this.operandTwo != 0){
-                    this.push(Integer.toString(operandOne / operandTwo));
+                    this.push(Integer.toString(this.operandOne / this.operandTwo));
                 }
                 else{
                     System.out.println("Divide by 0.");
@@ -107,7 +104,7 @@ public class SRPN {
             if(canPopTwice()){
                 this.operandTwo = Integer.parseInt(this.pop());
                 this.operandOne = Integer.parseInt(this.pop());
-                this.push(Integer.toString(operandOne % operandTwo));
+                this.push(Integer.toString(this.operandOne % this.operandTwo));
             }
             else{
                 System.out.println("Stack underflow.");
@@ -130,7 +127,7 @@ public class SRPN {
                         this.push(String.valueOf(Integer.MIN_VALUE));
                     }
                     else{
-                        this.push(Integer.toString((int) Math.pow(operandOne, operandTwo)));
+                        this.push(Integer.toString((int) Math.pow(this.operandOne, this.operandTwo)));
                     }
                 }
             }
@@ -151,13 +148,11 @@ public class SRPN {
         else if(input.contains("r")){
             for(char letter: input.toCharArray()){
                 if(letter == 'r'){
-                    this.push(Integer.toString(this.getRandomNumber()));
-                    if(this.randomNumberTracker > 22){
+                    this.randomNumberTracker++;
+                    if(this.randomNumberTracker > 21){
                         this.randomNumberTracker = 0;
                     }
-                    else{
-                        this.randomNumberTracker++;
-                    }
+                    this.push(Integer.toString(this.getRandomNumber()));
                 }
                 else{
                     System.out.println("Unrecognised operator or operand \"" + letter + "\".");
@@ -211,7 +206,6 @@ public class SRPN {
         this.randomNumbers[19] = 1303455736;
         this.randomNumbers[20] = 35005211;
         this.randomNumbers[21] = 521595368;
-        this.randomNumbers[22] = 1804289383;
     }
 
     public int getRandomNumber(){
@@ -228,12 +222,12 @@ public class SRPN {
         }
         else{
             this.pointer++;
-            this.stack[pointer] = operand;
+            this.stack[this.pointer] = operand;
         }
     }
 
     public String peek(){
-        return(this.stack[pointer]);
+        return(this.stack[this.pointer]);
     }
 
     public boolean canPopTwice(){
